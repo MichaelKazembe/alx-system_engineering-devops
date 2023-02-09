@@ -1,1 +1,2 @@
-mkdir -m iamafile 751
+#!/bin/bash
+mkdir -m my_dir 751
