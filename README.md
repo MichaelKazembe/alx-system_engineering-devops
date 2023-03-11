@@ -51,7 +51,7 @@ Clean Emacs //Create a script that deletes all files in the current working dire
 ### TASK 17. 
 Tree //a script that creates the directories welcome/, welcome/to/ and welcome/to/school in the current directory
 
-## TASK 18.
+### TASK 18.
 Life is a series of commas, not periods //a command that lists all the files and directories of the current directory, separated by commas (,
 
 ### TASK 19. 
