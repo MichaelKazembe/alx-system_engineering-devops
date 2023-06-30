@@ -2,11 +2,11 @@
 # This script displays Best School 10 times
 
 count=1
-while [ $count <= 10 ]; do
-	if [ $count == 9 ]; then
+while [ $count -le 10 ]; do
+	if [ $count -eq 9 ]; then
 		echo "Hi";
 	else
 		echo "Best School";
 	fi
-	((count++));
+((count++));
 done
