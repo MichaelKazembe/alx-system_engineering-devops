@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
-# Bash script that configures an Ubuntu server with the below requirements
 
+# Create a backup copy of the /etc/hosts file
 cp /etc/hosts ~/hosts.new || exit
-sed -i s/^127.0.0.1/127.0.0.2/ ~/hosts.new
-echo "8.8.8.8" "facebook.com" >> ~/hosts.new
+
+# Modify the backup copy to replace the loopback address
+sed -i 's/^127.0.0.1/127.0.0.2/' ~/hosts.new
+
+# Add an entry mapping IP address to hostname in the backup copy
+echo "8.8.8.8	facebook.com" >> ~/hosts.new
+
+# Overwrite the original /etc/hosts file with the modified version
 cp -f ~/hosts.new /etc/hosts
