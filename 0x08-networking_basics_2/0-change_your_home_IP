@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Create a backup copy of the /etc/hosts file
+# Script that configures an Ubuntu Server
 
 cp /etc/hosts ~/hosts.new 
 sed -i s/127.0.0.1/127.0.0.2/ ~/hosts.new
