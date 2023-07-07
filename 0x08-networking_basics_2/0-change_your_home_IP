@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Create a backup copy of the /etc/hosts file
 
 cp /etc/hosts ~/hosts.new 
