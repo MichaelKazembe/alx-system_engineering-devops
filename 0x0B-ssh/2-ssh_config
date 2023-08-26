@@ -1,0 +1,5 @@
+Host ubuntu@54.90.60.116
+    ForwardAgent yes
+    RSAAuthentication no
+    PasswordAuthentication no
+    IdentityFile ~/.ssh/school
