@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Configure your Nginx server to have a custom 404 page that contains the string Ceci n'est pas une page.
+
+FILE_=/etc/nginx/sites-available/default
+STRING=" error_page 404 /custom_404.html;\n location = /custom_404.html {\n root /usr/share/nginx/html;\n internal;\n}\n"
+REDIRECT_STRING="location /redirect_me {\n return 301 http://www.google.com;\n}\n"
+
+echo "Hello World!" | sudo tee /usr/share/nginx/html/index.html
+echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/custom_404.html
+
+service nginx start
+sudo sed -i "30i $REDIRECT_STRING" $FILE_
+sudo sed -i "33i$STRING" $FILE_
+sudo service nginx restart
