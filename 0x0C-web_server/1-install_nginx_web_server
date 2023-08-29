@@ -3,6 +3,6 @@
 # adds 'Hello World!' to index page of web server
 
 sudo apt-get -y install nginx
-echo "Hello World" | sudo tee /usr/share/nginx/html/index.html
+echo "Hello, World" | sudo tee /var/www/html/index.nginx-debian.html
 
-service nginx start
+sudo service nginx start
