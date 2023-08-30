@@ -7,7 +7,7 @@ sudo apt-get update
 sudo apt-get -y install nginx
 
 # Create a simple HTML page with "Hello World!"
-echo '<!DOCTYPE html><html><head><title>Hello World</title></head><body><h1>Hello World!</h1></body></html>' | sudo tee /var/www/html/index.html
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
 # Configure Nginx to listen on port 80 and serve the new HTML page
 cat <<EOF | sudo tee /etc/nginx/sites-available/default
@@ -30,5 +30,4 @@ EOF
 sudo nginx -s reload
 
 # Output a message indicating successful configuration
-echo "Nginx installed and configured. It should be serving 'Hello World!' at http://100.26.249.239/"
-
+echo "Nginx installed and configured"
