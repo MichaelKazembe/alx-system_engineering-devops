@@ -1,8 +1,31 @@
 #!/usr/bin/env bash
-# install nginx web server
-# adds 'Hello World!' to index page of web server
+
+# Installs, configures, and starts the web server
 
 sudo apt-get -y install nginx
-echo "Hello, World" | sudo tee /var/www/html/index.nginx-debian.html
+sudo ufw allow 'Nginx HTTP'
+mkdir -p /var/www/html
+chmod -R 755 /var/www
+echo 'Hello World!' > /var/www/html/index.html
+SERVER_CONFIG.=\
+"server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
 
-sudo service nginx start
+	root /var/www/html;
+	index index.html index.htm index.nginx-debian.html;
+
+	server_name _;
+
+	location / {
+		try_files \$uri \$uri/ =404;
+	}
+}"
+
+bash -c "echo -e '$SERVER_CONFIG.' > /etc/nginx/sites-enabled/default"
+
+if [ "$(pgrep -c nginx)" -le 0 ]; then
+	sudo service nginx start
+else
+	sudo service nginx restart
+fi
