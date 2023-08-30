@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Webstack debugging 
+# cod eot fux curling issue
+sudo service apache2 start
