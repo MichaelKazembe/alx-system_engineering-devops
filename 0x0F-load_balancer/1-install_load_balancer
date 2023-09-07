@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Install and configure HAproxy(load balancer) on your lb-01 server.
-# colors
+# Install and configure HAproxy on your lb-01 server.
+# colours
+
 blue='\e[1;34m'
 brown='\e[0;33m'
 green='\e[1;32m'
@@ -35,8 +36,8 @@ frontend th3gr00t-tech-frontend
     default_backend th3gr00t-tech-backend
 backend th3gr00t-tech-backend
     balance roundrobin
-    server 26071-web-01 35.153.52.5:80 check
-    server 26071-web-02 100.25.222.164:80 check
+    server 227423-web-01 35.153.52.5:80 check
+    server 227423-web-01 100.25.222.164:80 check
 "
 # shellcheck disable=SC2154
 echo "$server_config" | sudo dd status=none of=/etc/haproxy/haproxy.cfg
