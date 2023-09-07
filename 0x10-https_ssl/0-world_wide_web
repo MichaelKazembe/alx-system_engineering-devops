@@ -1,38 +1,17 @@
 #!/usr/bin/env bash
 
-# Function to display subdomain information
-display_subdomain_info() {
-  local subdomain="$1"
-  local domain="$2"
-
-  # Perform a DNS lookup for the subdomain and extract relevant information
-  result=$(dig "$subdomain.$domain" +short)
-
-  # Check if the result is empty (subdomain doesn't exist)
-  if [ -z "$result" ]; then
-    echo "The subdomain $subdomain does not exist."
-  else
-    record_type=$(dig "$subdomain.$domain" | awk '/ANSWER SECTION:/ {getline; print $4}')
-    echo "The subdomain $subdomain is a $record_type record and points to $result"
-  fi
-}
-
-# Main script
-if [ $# -lt 1 ]; then
-  echo "Usage: $0 <domain> [<subdomain>]"
-  exit 1
-fi
+# A Bash script that displays info about subdomains
 
 domain="$1"
-
-# Default subdomains
-subdomains=("www" "lb-01" "web-01" "web-02")
+array=("www" "lb-01" "web-01" "web-02")
 
 if [ $# -eq 2 ]; then
-  subdomain="$2"
-  display_subdomain_info "$subdomain" "$domain"
+    subdomain="$2"
+    echo -n "The subdomain $2"
+    dig "$subdomain.$domain" | grep -A1 'ANSWER SECTION:' | tail -n 1 | awk '{print " is a " $4 " record and points to " $5}'
 else
-  for subdomain in "${subdomains[@]}"; do
-    display_subdomain_info "$subdomain" "$domain"
-  done
+    for i in "${array[@]}"; do
+        echo -n "The subdomain $i"
+        dig "$i.$domain" | grep -A1 'ANSWER SECTION:' | tail -n 1 | awk '{print " is a " $4 " record and points to " $5}'
+    done
 fi
