@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Installs Nginx with the following configurations:
+## Installs Nginx with the following configurations:
 # > Listens on port 80.
 # > Returns a page containing "Holberton School" when queried
 # > at the root with a curl GET request.
@@ -8,28 +8,47 @@
 # > Contains a custom HTTP header named X-Served-By.
 # > The value of the HTTP header is the hostname of the running server.
 
+# Check if the script is being run as root (sudo)
+if [ "$EUID" -ne 0 ]; then
+  echo "This script must be run with sudo or as root."
+  exit 1
+fi
+
+# Install Nginx
+apt-get update
 apt-get install -y nginx
 
+# Create the necessary directories
 mkdir -p /var/www/html
-touch /var/www/html/index.html
+
+# Create index.html and 404.html
 echo "Holberton School" > /var/www/html/index.html
-touch /var/www/html/404.html
 echo "Ceci n'est pas une page" > /var/www/html/404.html
 
-printf %s "server {
+# Configure Nginx
+printf %s 'server {
     listen 80 default_server;
     listen [::]:80 default_server;
-    add_header X-Served-By $HOSTNAME;
-    root   /var/www/html;
-    index  index.html index.htm;
-    location /redirect_me {
-        return 301 http://cuberule.com/;
-    }
-    error_page 404 /404.html;
-    location /404 {
-      root /var/www/html;
-      internal;
-    }
-}" > /etc/nginx/sites-available/default
+    add_header X-Served-By $hostname;
+    root /var/www/html;
+    index index.html index.htm;
 
+    location /redirect_me {
+        return 301 http://google.com/;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        root /var/www/html;
+        internal;
+    }
+}' > /etc/nginx/sites-available/default
+
+# Create a symlink to enable the custom configuration
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+# Restart Nginx to apply the changes
 service nginx restart
+
+# Confirm the X-Served-By header
+curl -sI $HOSTNAME | grep X-Served-By
