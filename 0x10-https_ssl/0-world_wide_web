@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
-# # A Bash script that displays info about subdomains
+# Show subdomain record type and IP address it points to
 
-display_subdomain_info () {
-    if [ "$#" -eq 2 ]; then
-        dig "$2.$1" | grep -A1 'ANSWER SECTION:' | tr '\n' ' ' | awk '{split($0,a," "); split(a[4],b,"."); printf "The subdomain %s is a %s record and points to %s\n", b[1], a[7], a[8]}'
-    elif [ "$#" -eq 1 ]; then
-        dig "www.$1" | grep -A1 'ANSWER SECTION:' | tr '\n' ' ' | awk '{split($0,a," "); printf "The subdomain www is a %s record and points to %s\n", a[7], a[8]}'
-        dig "lb-01.$1" | grep -A1 'ANSWER SECTION:' | tr '\n' ' ' | awk '{split($0,a," "); printf "The subdomain lb-01 is a %s record and points to %s\n", a[7], a[8]}'
-        dig "web-01.$1" | grep -A1 'ANSWER SECTION:' | tr '\n' ' ' | awk '{split($0,a," "); printf "The subdomain web-01 is a %s record and points to %s\n", a[7], a[8]}'
-        dig "web-02.$1" | grep -A1 'ANSWER SECTION:' | tr '\n' ' ' | awk '{split($0,a," "); printf "The subdomain web-02 is a %s record and points to %s\n", a[7], a[8]}'
-    else
-        echo "Usage: $0 <domain> [<subdomain>]"
-    fi
-}
 
-# Call the sub_info function with command-line arguments
-display_subdomain_info "$1" "$2"
+if [ $# -eq 2 ]
+then
+    subdomain="$2.$1"
+    ip=$(dig "$subdomain" | grep -A1 'ANSWER SECTION:' | tail -1 | awk '{print $5}')
+    record_type=$(dig "$subdomain" | grep -A1 'ANSWER SECTION:' | tail -1 | awk '{print $4}')
+    echo "The subdomain $2 is a $record_type record and points to $ip"
+elif [ $# -eq 1 ]
+then
+    for subdomain in 'www' 'lb-01' 'web-01' 'web-02'
+    do
+        domain="$subdomain.$1"
+        ip=$(dig "$domain" | grep -A1 'ANSWER SECTION:' | tail -1 | awk '{print $5}')
+        record_type=$(dig "$domain" | grep -A1 'ANSWER SECTION:' | tail -1 | awk '{print $4}')
+        echo "The subdomain $subdomain is a $record_type record and points to $ip"
+    done
+fi
