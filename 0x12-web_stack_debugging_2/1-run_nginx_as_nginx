@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# reconfigures nginx config file to change user to nginx
+
+pkill -f apache2
+sudo sed -i "s/user .*;/user nginx nginx;/" /etc/nginx/nginx.conf
+sudo chmod 644 /etc/nginx/nginx.conf
+sudo sed -i "s/listen 80 default_server;/listen 8080 default_server;/" /etc/nginx/sites-available/default
+sudo -u nginx service nginx restart
