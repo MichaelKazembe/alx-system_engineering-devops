@@ -9,14 +9,14 @@ import sys
 def employee_info():
     """Getting employee information."""
     employ = requests.get('https://jsonplaceholder.typicode.com/users/{}'
-                       .format(sys.argv[1]))
+                          .format(sys.argv[1]))
     name = employ.json().get('name')
     tasks = requests.get('https://jsonplaceholder.typicode.com/todos')
     tasks = tasks.json()
     complete = 0
     titles = []
     total = 0
-    
+
     for task in tasks:
         if task['userId'] == int(sys.argv[1]):
             if task['completed'] is True:
@@ -25,7 +25,7 @@ def employee_info():
             total += 1
     print("Employee {} is done with tasks({}/{}):"
           .format(name, complete, total))
-    
+
     for title in titles:
         print('\t ', end="")
         print(title)
