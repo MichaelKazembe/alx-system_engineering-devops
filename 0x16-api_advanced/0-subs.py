@@ -5,12 +5,12 @@ import requests
 
 def number_of_subscribers(subreddit):
     """ functions that returns the number of subscribers """
-    url = "https://www.reddit.com/r/{subreddit}/about.json"
+    url = f"https://www.reddit.com/r/{subreddit}/about.json"
     headers = {"User-Agent": "MyBot/1.0"}
 
     response = requests.get(url, headers=headers, allow_redirects=False)
     if response.status_code == 200:
-        date = response.json()
+        data = response.json()
 
         subscribers = data['data']['subscribers']
         return subscribers
