@@ -28,9 +28,10 @@ Here is a sample Postmortem/Incident report:
 - **09:00 AM:** Our trusty automated monitoring systems detected the fur-mageddon.
 - **09:05 AM:** The operations team leaped into action - but no amount of cat-like reflexes could've prepared them for this.
 
-![Cat Time](https://unsplash.com/photos/z0Gj9gr92A8)
+![Cat Time](C:\Users\micha\Downloads\gilly-z0Gj9gr92A8-unsplash.jpg)
 
-- **09:10 AM:** Initial investigation revealed a suspicious spike in incoming traffic - were the cats staging a coup?
+**09:10 AM:** Initial investigation revealed a suspicious spike in incoming traffic - were the cats staging a coup?
+
 - **09:30 AM:** Misleading path: We thought it was a DDoS attack, but it turned out the cat video craze was very real.
 - **09:45 AM:** The development team got involved, convinced the cats must've hacked our servers.
 - **10:15 AM:** The mystery unraveled - our load balancer was misconfigured, distributing traffic like a cat chasing a laser pointer.
